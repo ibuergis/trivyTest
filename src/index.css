@@ -1,0 +1,244 @@
+:root {
+  --bg: #f8f6f2;
+  --card: #ffffff;
+  --text: #1c1b21;
+  --muted: #5e5a6b;
+  --accent: #f14f32;
+  --accent-dark: #c43f29;
+  --shadow: 0 10px 30px rgba(28, 27, 33, 0.08);
+  font-family: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, rgba(241, 79, 50, 0.07), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(42, 181, 164, 0.08), transparent 40%),
+    var(--bg);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  font-size: 20px;
+}
+
+.brand-mark {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f14f32, #ff8f6a);
+  color: #fff;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 600;
+}
+
+.nav-link {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--muted);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link.active {
+  color: var(--text);
+  background: rgba(241, 79, 50, 0.1);
+}
+
+.cta {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: none;
+  background: var(--text);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.cta:active {
+  transform: translateY(1px);
+}
+
+.hero {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 38px);
+  letter-spacing: -0.6px;
+}
+
+.hero p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 640px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.thumb {
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(241, 79, 50, 0.2), rgba(42, 181, 164, 0.2));
+  height: 140px;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.price {
+  font-weight: 700;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(42, 181, 164, 0.16);
+  color: #147463;
+  font-weight: 700;
+}
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 26px 0 12px;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.layout-2col {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.panel {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.panel h3 {
+  margin-top: 0;
+}
+
+.line {
+  height: 1px;
+  background: #e6e1d9;
+  margin: 14px 0;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 10px 0;
+}
+
+.cart-item strong {
+  display: block;
+}
+
+.muted-link {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.footer {
+  margin-top: 32px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .layout-2col {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
