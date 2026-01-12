@@ -30,6 +30,7 @@ No parameterization = SQL injection. The in-memory SQLite DB has an `admin` user
 - `server.js` — Express server, vulnerable `/api/login`, seeds an in-memory SQLite DB.
 - `public/index.html` — simple UI to send login requests and try the injection payload.
 - `package.json` — deps and scripts.
+- `package-lock.json` (generated locally) — will capture the intentionally vulnerable npm dep for scanning.
 - `requirements.txt` — intentionally includes a vulnerable Python dependency (`requests==2.19.0`) so Trivy’s vuln scanner has something to flag even without the code scanner.
 
 ## Running Trivy
@@ -47,6 +48,7 @@ trivy fs --scanners vuln,secret,misconfig .
 
 Trivy should flag:
 - The vulnerable Python dependency in `requirements.txt` with the default vuln scanner.
+- The vulnerable npm dependency `lodash@4.17.15` once you run `npm install` (and commit the generated `package-lock.json`).
 - The unsafe SQL concatenation in `server.js` when the code scanner is enabled.
 
 ## Reminder
