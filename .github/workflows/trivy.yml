@@ -16,6 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate package-lock for npm scan (no install scripts)
+        run: npm install --package-lock-only --ignore-scripts
+        shell: bash
+
       - name: Trivy FS scan (deps, secrets, misconfig, code)
         uses: aquasecurity/trivy-action@0.24.0
         with:

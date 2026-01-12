@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "test": "echo \"No tests defined\""
+    "test": "echo \"No tests defined\"",
+    "trivy:fs": "trivy fs --scanners vuln,secret,misconfig .",
+    "trivy:code": "trivy fs --scanners vuln,secret,misconfig,code ."
   },
   "dependencies": {
     "lodash": "4.17.15",
