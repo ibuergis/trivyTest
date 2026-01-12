@@ -1,0 +1,2 @@
+# Intentional vulnerable dependencies for Trivy demos
+requests==2.19.0  # CVE-2018-18074
