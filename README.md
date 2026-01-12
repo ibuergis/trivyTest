@@ -49,6 +49,7 @@ trivy fs --scanners vuln,secret,misconfig .
 Trivy should flag:
 - The vulnerable Python dependency in `requirements.txt` with the default vuln scanner.
 - The vulnerable npm dependency `lodash@4.17.15` once you run `npm install` (and commit the generated `package-lock.json`).
+- The vulnerable npm dependency `minimist@0.0.8` once you run `npm install` (and commit the generated `package-lock.json`).
 - The unsafe SQL concatenation in `server.js` when the code scanner is enabled.
 
 ## Reminder
