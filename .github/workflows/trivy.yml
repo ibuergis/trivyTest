@@ -1,0 +1,32 @@
+name: Trivy Scan
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Trivy FS scan (deps, secrets, misconfig, code)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          scan-type: fs
+          scanners: vuln,secret,misconfig,code
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH,MEDIUM
+          format: sarif
+          output: trivy-results.sarif
+
+      - name: Upload SARIF to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-results.sarif

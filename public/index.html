@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL Injection Demo</title>
+    <style>
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: #f6f7fb;
+        margin: 0;
+        padding: 0;
+        color: #1b1b1f;
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        padding: 24px;
+      }
+      h1 {
+        margin-top: 0;
+      }
+      .muted {
+        color: #5f6470;
+      }
+      form {
+        display: grid;
+        gap: 12px;
+        margin-top: 12px;
+      }
+      label {
+        display: grid;
+        gap: 6px;
+        font-weight: 600;
+      }
+      input {
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #d9dce3;
+        font-size: 15px;
+      }
+      button {
+        padding: 12px 14px;
+        border: none;
+        border-radius: 10px;
+        background: #1b1b1f;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .ghost {
+        background: #eef1f6;
+        color: #1b1b1f;
+      }
+      pre {
+        background: #0f1115;
+        color: #e8ecf1;
+        padding: 12px;
+        border-radius: 10px;
+        overflow-x: auto;
+      }
+      .callout {
+        margin-top: 14px;
+        padding: 12px;
+        background: #fff5e5;
+        border-left: 4px solid #f59e0b;
+      }
+      code {
+        background: #eef1f6;
+        padding: 2px 4px;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>SQL Injection Login Demo</h1>
+      <p class="muted">
+        This page posts to <code>/api/login</code>. The backend builds a SQL query by string-concatenating your input,
+        making it vulnerable to injection. Only injection lets you in because the real admin password is unknown.
+      </p>
+      <form id="login-form">
+        <label>
+          Username
+          <input id="username" name="username" value="admin' --" />
+        </label>
+        <label>
+          Password
+          <input id="password" name="password" value="anything" />
+        </label>
+        <div class="row">
+          <button type="submit">Send login</button>
+          <button type="button" class="ghost" id="fill-injection">Fill injection</button>
+        </div>
+      </form>
+      <div class="callout">
+        <strong>Try this payload:</strong>
+        <div><code>{"username": "admin' --", "password": "x"}</code></div>
+        or
+        <div><code>{"username": "' OR 1=1 --", "password": "x"}</code></div>
+      </div>
+      <h3>Response</h3>
+      <pre id="output">Awaiting request...</pre>
+    </div>
+
+    <script>
+      const form = document.getElementById('login-form');
+      const output = document.getElementById('output');
+      const fill = document.getElementById('fill-injection');
+      const userInput = document.getElementById('username');
+      const passInput = document.getElementById('password');
+
+      fill.addEventListener('click', () => {
+        userInput.value = "admin' --";
+        passInput.value = 'anything';
+        output.textContent = 'Injection payload filled.';
+      });
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        output.textContent = 'Sending...';
+        try {
+          const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              username: userInput.value,
+              password: passInput.value,
+            }),
+          });
+          const data = await res.json().catch(() => ({}));
+          output.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          output.textContent = 'Network error: ' + err.message;
+        }
+      });
+    </script>
+  </body>
+</html>
