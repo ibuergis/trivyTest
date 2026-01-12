@@ -39,8 +39,9 @@ If you have Trivy installed:
 # Dependency and secret/misconfig scan
 trivy fs --scanners vuln,secret,misconfig .
 
-# Code/SAST scan (requires Trivy with the code scanner)
-trivy fs --scanners vuln,secret,misconfig,code .
+# Code/SAST scan (requires a Trivy build that includes the `code` scanner)
+# If your version supports it, add ",code" to scanners:
+# trivy fs --scanners vuln,secret,misconfig,code .
 ```
 
 Trivy should flag the unsafe SQL concatenation in `server.js` when the code scanner is enabled.

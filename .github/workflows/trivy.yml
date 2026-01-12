@@ -20,7 +20,9 @@ jobs:
         uses: aquasecurity/trivy-action@0.24.0
         with:
           scan-type: fs
-          scanners: vuln,secret,misconfig,code
+          # The bundled Trivy version currently supports vuln/secret/misconfig/license.
+          # Add ",code" once the runner image includes the code scanner.
+          scanners: vuln,secret,misconfig
           ignore-unfixed: true
           severity: CRITICAL,HIGH,MEDIUM
           format: sarif
